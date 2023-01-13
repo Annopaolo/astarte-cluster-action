@@ -18,6 +18,7 @@ kubectl wait --namespace ingress-nginx \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s || exit 1
 
+# A
 # Install Astarte operator
 helm install astarte-operator astarte/astarte-operator --version "$1" --set image.tag="$2" || exit 1
 
