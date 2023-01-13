@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Wait for coredns to be ready before everything
+kubectl wait --namespace kube-system \
+  --for=jsonpath='{.status.readyReplicas}'=2 deploy/coredns \
+  --timeout=90s || exit 1
+
 # Manage Helm repositories
 helm repo add jetstack https://charts.jetstack.io
 helm repo add astarte https://helm.astarte-platform.org
