@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install NGINX (inside KinD)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-
 # Manage Helm repositories
 helm repo add jetstack https://charts.jetstack.io
 helm repo add astarte https://helm.astarte-platform.org
@@ -11,6 +8,11 @@ helm repo update
 # Install cert-manager
 kubectl create namespace cert-manager
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.10.0 --set installCRDs=true || exit 1
+
+# Install ingress-nginx
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
 
 # Wait for everything to settle
 kubectl wait --namespace ingress-nginx \
