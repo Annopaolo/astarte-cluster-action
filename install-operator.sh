@@ -24,7 +24,7 @@ kubectl wait --namespace kube-system \
   --timeout=90s || exit 1
 
 # Install Astarte operator
-helm install astarte-operator astarte/astarte-operator --version "$1" --set image.tag="$2" || exit 1
+helm install astarte-operator astarte/astarte-operator --version "$1" || exit 1
 
 # Wait 10s for it to settle
 sleep 10
